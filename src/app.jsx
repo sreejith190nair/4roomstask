@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Footer from "./components/footer";
-import UserList from "./components/userList";
+import UserList from "./components/users/userList";
 import Auth from "./components/auth";
 import Header from "./components/header";
 import {API_URL} from "./utils/contants";

@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {API_URL} from "../utils/contants";
+import {API_URL} from "../../utils/contants";
+import UserEditModal from "./userEditModal";
+import UserDeleteModal from "./userDeleteModal";
 
 const UserList = ({setIsUserAuthenticated}) => {
     const [users, setUsers] = useState([]);
+    const [isListChanged, setIsListChanged] = useState(false);
 
     const fetchUsers = async () => {
         const token = localStorage.getItem("token");
@@ -29,7 +32,7 @@ const UserList = ({setIsUserAuthenticated}) => {
 
     useEffect(() => {
         fetchUsers();
-    }, []);
+    }, [isListChanged]);
 
     return (
         <div className="relative overflow-x-auto flex flex-col justify-center items-center">
@@ -62,6 +65,9 @@ const UserList = ({setIsUserAuthenticated}) => {
                         <th scope="col" className="px-6 py-3">
                             Registered At
                         </th>
+                        <th scope="col" className="px-6 py-3">
+                            Actions
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,6 +92,16 @@ const UserList = ({setIsUserAuthenticated}) => {
                                     {new Date(
                                         user.created_at
                                     ).toLocaleDateString()}
+                                </td>
+                                <td className="flex px-6 py-4 gap-2">
+                                    <UserEditModal
+                                        user={user}
+                                        setIsListChanged={setIsListChanged}
+                                    />
+                                    <UserDeleteModal
+                                        id={user.id}
+                                        setIsListChanged={setIsListChanged}
+                                    />
                                 </td>
                             </tr>
                         ))}
